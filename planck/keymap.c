@@ -51,9 +51,14 @@ enum planck_keycodes {
 #define S_DGR ALGR(KC_COLN) // °
 #define S_CRS ALGR(KC_EQL)  // ×
 #define S_EMP ALGR(KC_L)    // ø
-#define S_LQT ALGR(KC_LBRC) // «     áàaaaoà
+#define S_LQT ALGR(KC_LBRC) // «
 #define S_RQT ALGR(KC_RBRC) // »
 #define S_FRA ALGR(KC_PLUS) // ÷
+
+// Mac-only
+#define M_HME LCTL(KC_LEFT)
+#define M_END LCTL(KC_RIGHT)
+#define M_SCR S(A(KC_3))
 
 // Transparent / Off key
 #define ___x___ KC_NO
@@ -178,39 +183,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (!process_mouse_turbo_click(keycode, record, TURBO)) { return false; }
 
   switch (keycode) {
-    // ................................................................. Qwerty Layer
+    // ............................................................ Qwerty Layer
     case QWERTY:
       if (record->event.pressed) {
         print("mode just switched to qwerty\n");
         set_single_persistent_default_layer(_QWERTY);
       }
       return false;
-    // .................................................................. ASCII Arrow
+    // ............................................................. ASCII Arrow
     case ARROW:
       if (record->event.pressed) {
         //send_unicode_string(shifted ? "\xe2\x87\x92" : "\xe2\x86\x92");
         SEND_STRING((get_mods() & MOD_MASK_SHIFT) ? "->" : "=>");
       }
       return false;
-    // ................................................... daniele.salvagni@gmail.com
+    // .............................................. daniele.salvagni@gmail.com
     case EMAIL:
       if (record->event.pressed) {
         SEND_STRING("daniele.salvagni@gmail.com");
       }
       return false;
-    // ............................................................ stackoverflow.com
+    // ....................................................... stackoverflow.com
     case STACK:
       if (record->event.pressed) {
         SEND_STRING("stackoverflow.com");
       }
       return false;
-    // ............................................................... console.log();
+    // .......................................................... console.log();
     case CLOG:
       if (record->event.pressed) {
         SEND_STRING("console.log();"SS_TAP(X_LEFT)SS_TAP(X_LEFT));
       }
       return false;
-    // ............................................................ PTT & Alt/GUI-Tab
+    // ....................................................... PTT & Alt/GUI-Tab
     case KC_MHEN: ;  // c needs a statement ";" after a label
       // Keep track of the registered to then unregister the correct one
       static uint8_t reg_kc = 0;
@@ -227,7 +232,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       send_keyboard_report(); // because we are bypassing register/unregister_code
       return false;
-    // ...................................................................... {} Pair
+    // ................................................................. {} Pair
     case M_CRL:
       if (record->event.pressed) {
         if (!record->tap.count) {
@@ -237,7 +242,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(KC_LCBR);
       }
       return false;
-    // ...................................................................... [] Pair
+    // ................................................................. [] Pair
     case M_SQR:
       if (record->event.pressed) {
         if (!record->tap.count) {
@@ -247,7 +252,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(KC_LBRC);
       }
       return false;
-    // ...................................................................... () Pair
+    // ................................................................. () Pair
     case M_PRN:
       if (record->event.pressed) {
         if (!record->tap.count) {
@@ -257,7 +262,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(KC_LPRN);
       }
       return false;
-    // ............................................................ Search in New Tab
+    // ....................................................... Search in New Tab
     case SRCHSEL:  // Searches the current selection in a new tab.
       if (record->event.pressed) {
       // On Mac change LCTL to LGUI.
