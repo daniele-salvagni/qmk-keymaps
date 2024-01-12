@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------------------------------------------------*/
   [_QWERTY] = LAYOUT_planck_grid(
     QK_GESC, KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,
-    KC_MHEN, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_MINS,
+    KC_INT5, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_MINS,
     KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_UP  , KC_SLSH,
     KC_LCTL, FUNCT  , KC_LGUI, KC_LALT, LOWER  , KC_SPC , KC_SPC , RAISE  , KC_ENT, KC_LEFT , KC_DOWN, KC_RGHT),
 
@@ -138,9 +138,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |      |      |      |      |      |             |      |      |      |      |TURBO |
    * `-----------------------------------------------------------------------------------*/
   [_ADJUST] = LAYOUT_planck_grid(
-    _______, QK_BOOT, DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______, _______, _______,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  CK_TOGG, _______, _______, _______, _______, _______, _______,
+    _______, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,
+    _______, _______, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______, _______, _______,
+    _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  CK_TOGG, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, TURBO)
 };
 
@@ -216,13 +216,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     // ....................................................... PTT & Alt/GUI-Tab
-    case KC_MHEN: ;  // c needs a statement ";" after a label
+    case KC_INT5: ;  // c needs a statement ";" after a label
       // Keep track of the registered to then unregister the correct one
       static uint8_t reg_kc = 0;
 
       if (record->event.pressed) { // MHEN key pressed
         // If ALT or GUI is pressed, send TAB instead of MHEN (PTT Key)
-        reg_kc = (get_mods() & MOD_MASK_AG) ? KC_TAB : KC_MHEN;
+        reg_kc = (get_mods() & MOD_MASK_AG) ? KC_TAB : KC_INT5;
         add_key(reg_kc);
       } else { // MHEN key depressed
         if (reg_kc != 0) {
