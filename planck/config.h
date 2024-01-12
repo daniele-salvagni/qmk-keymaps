@@ -26,4 +26,4 @@
 #define GRAVE_ESC_CTRL_OVERRIDE
 
 // Set Unicode mode for Windows with WinCompose
-#define UNICODE_SELECTED_MODES UC_WINC
+#define UNICODE_SELECTED_MODES UNICODE_MODE_WINCOMPOSE
